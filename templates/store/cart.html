@@ -7,6 +7,7 @@
 
 		<!-- ============================ COMPONENT 1 ================================= -->
 
+		{%if quantity > 0 %}
 		<div class="row">
 			<aside class="col-lg-9">
 				<div class="card">
@@ -60,6 +61,7 @@
 							{% endfor %}
 						</tbody>
 					</table>
+
 				</div> <!-- card.// -->
 
 			</aside> <!-- col.// -->
@@ -92,6 +94,15 @@
 
 
 		</div> <!-- row.// -->
+		
+		{% else %}
+		<div class="row justify-content-center text-center">
+			<div class="col-md-5 my-auto">
+				<h2>Your Shopping Cart Is Empty</h2>
+				<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+			</div>
+		</div>
+		{% endif %}
 		<!-- ============================ COMPONENT 1 END .// ================================= -->
 
 	</div> <!-- container .//  -->
