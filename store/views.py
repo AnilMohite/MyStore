@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
 from category.models import Category
 from carts.models import CartItem
@@ -33,3 +33,18 @@ def product_detail(request,category_slug=None,product_slug=None):
         'in_cart' : in_cart
     }
     return render(request, 'store/product-detail.html', context)
+
+def search(request):
+    if 'search' in request.path:
+        q = request.GET.get('q')
+        products = Product.objects.filter(product_name__icontains = q)
+        paginator = Paginator(products, 1)
+        page = request.GET.get('page')
+        page_products = paginator.get_page(page)
+        total_products = products.count()
+        context = {
+            'products':page_products,
+            'total_products':total_products
+        }
+        return render(request, 'store/store.html', context)
+    return redirect('store')
