@@ -38,12 +38,12 @@ def search(request):
     if 'search' in request.path:
         q = request.GET.get('q')
         products = Product.objects.filter(product_name__icontains = q)
-        paginator = Paginator(products, 1)
-        page = request.GET.get('page')
-        page_products = paginator.get_page(page)
+        # paginator = Paginator(products, 1)
+        # page = request.GET.get('page')
+        # page_products = paginator.get_page(page)
         total_products = products.count()
         context = {
-            'products':page_products,
+            'products':products,
             'total_products':total_products
         }
         return render(request, 'store/store.html', context)
