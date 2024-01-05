@@ -157,7 +157,7 @@
 				</div> <!-- row end.// -->
 
 
-				<nav class="mt-4" aria-label="Page navigation sample">
+				<!-- <nav class="mt-4" aria-label="Page navigation sample">
 					{% if products.has_other_pages %}
 					<ul class="pagination">
 						{% if products.has_previous %}
@@ -181,9 +181,22 @@
 						{% endif %}
 					</ul>
 					{% endif %}
-					
-						
-				</nav>
+				</nav> -->
+				<div class="pagination">
+						{% if products.has_previous %}
+							<a class="page-link" href="?page=1">&laquo; first</a>
+							<a class="page-link" href="?page={{ products.previous_page_number }}">previous</a>
+						{% endif %}
+				
+						<span class="page-link disabled">
+							Page {{ products.number }} of {{ products.paginator.num_pages }}.
+						</span>
+				
+						{% if products.has_next %}
+							<a class="page-link" href="?page={{ products.next_page_number }}">next</a>
+							<a class="page-link" href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+						{% endif %}
+				</div>
 
 			</main> <!-- col.// -->
 

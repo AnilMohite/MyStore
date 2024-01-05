@@ -12,7 +12,7 @@ def store(request, category_slug=None):
     else:
         products = Product.objects.filter(is_available = True)
 
-    paginator = Paginator(products,1)
+    paginator = Paginator(products,6)
     page = request.GET.get('page')
     page_products = paginator.get_page(page)
     total_products = products.count()
