@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 
 def register(request):
-    return HttpResponse('register')
+    return render(request, 'accounts/register.html')
 
 def login(request):
     return HttpResponse('login')
