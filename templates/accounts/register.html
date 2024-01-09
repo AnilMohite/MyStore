@@ -7,17 +7,21 @@
   <!-- ============================ COMPONENT REGISTER   ================================= -->
   <div class="card mx-auto" style="max-width: 520px; margin-top: 40px">
     <article class="card-body">
+      {{ form.non_field_errors }}
       <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-      <form>
+      <form action="" method="POST">
+        {% csrf_token %}
         <div class="form-row">
           <div class="col form-group">
             <label>First name</label>
            {{form.first_name}}
+           <small class="form-text text-muted danger">{{ form.first_name.errors }}</small>
           </div>
           <!-- form-group end.// -->
           <div class="col form-group">
             <label>Last name</label>
             {{form.last_name}}
+            <small class="form-text text-muted danger">{{ form.last_name.errors }}</small>
           </div>
           <!-- form-group end.// -->
         </div>
@@ -26,10 +30,12 @@
           <div class="col form-group">
             <label>Email</label>
             {{form.email}}
+            <small class="form-text text-muted text-danger">{{ form.email.errors }}</small>
           </div>
           <div class="col form-group">
             <label>Phone Number</label>
             {{form.phone_number}}
+            <small class="form-text text-muted danger">{{ form.phone_number.errors }}</small>
           </div>
       </div>
         <!-- form-row.// -->
@@ -38,11 +44,13 @@
           <div class="form-group col-md-6">
             <label>Create password</label>
             {{form.password}}
+            <small class="form-text text-muted danger">{{ form.password.errors }}</small>
           </div>
           <!-- form-group end.// -->
           <div class="form-group col-md-6">
             <label>Repeat password</label>
             {{form.confirm_password}}
+            <small class="form-text text-muted danger">{{ form.confirm_password.errors }}</small>
           </div>
           <!-- form-group end.// -->
         </div>
@@ -55,7 +63,7 @@
     <!-- card-body.// -->
   </div>
   <!-- card .// -->
-  <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
+  <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
   <br /><br />
   <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 </section>
