@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import RegistrationForm
 from .models import Account
-from django.contrib import messages
+from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
@@ -31,4 +32,23 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 def login(request):
-    return HttpResponse('login')
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        print(email, password)
+        user = auth.authenticate(email=email, password=password)
+        if user is not None:
+            print('ss')
+            auth.login(request, user)
+            messages.success(request, "Logged in successfully!")
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid login credentials")
+            return redirect('login')
+    return render(request, 'accounts/login.html')
+
+@login_required(login_url="login")
+def logout(request):
+    auth.logout(request)
+    messages.success(request, "Logged out successfully.")
+    return redirect('home')
