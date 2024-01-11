@@ -61,4 +61,4 @@ $(document).ready(function() {
 
 setTimeout(()=>{
     $('#message').fadeOut('slow')
-}, 4000);
+}, 10000);

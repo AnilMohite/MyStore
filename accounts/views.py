@@ -32,20 +32,24 @@ def register(request):
             user.save()
 
             # send verification link
-            current_site = get_current_site(request)
-            mail_subject = "Activate Your Account"
-            messages = render_to_string('accounts/accounts_verification_mail.html',{
-                'user':user,
-                'domain':current_site,
-                'uid':urlsafe_base64_encode(force_bytes(user.id)),
-                'token': default_token_generator.make_token(user)
-            })
-            to_email = email
-            send_email = EmailMessage(mail_subject, messages, to=[to_email])
-            send_email.send()
+            try:
+                current_site = get_current_site(request)
+                email_subject = "Activate Your Account"
+                email_message = render_to_string('accounts/accounts_verification_mail.html',{
+                    'user':user,
+                    'domain':current_site,
+                    'uid':urlsafe_base64_encode(force_bytes(user.id)),
+                    'token': default_token_generator.make_token(user)
+                })
+                to_email = email
+                send_email = EmailMessage(email_subject, email_message, to=[to_email])
+                send_email.send()
+            except Exception as e:
+                Warning(f"Error while sending email: {str(e)}" )
+                messages.error(request, "Error while sending verification link on mail.")
 
-            messages.success(request, "Registration successfull.")
-            return redirect('register')
+            msg = f"Welcome to Mystore! 🚀 We've sent a verification link to {email}. Click it to activate your account. Cheers to new beginnings!"
+            return redirect('/accounts/register/?msg='+msg)
     else:
         form = RegistrationForm()
     context = {
