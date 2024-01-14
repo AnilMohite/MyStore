@@ -99,3 +99,6 @@ def activate(request, uidb64, token):
 @login_required(login_url='login')
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
+
+def forgot_password(request):
+    return render(request, 'accounts/forgot_password.html')
