@@ -104,7 +104,7 @@ def forgot_password(request):
     if request.method == "POST":
         email = request.POST.get('email')
         if Account.objects.filter(email=email).exists():
-            user = Account.objects.get(email__extact = email)
+            user = Account.objects.get(email__exact = email)
 
             # send reset link
             try:
@@ -131,4 +131,19 @@ def forgot_password(request):
 
 
 def reset_password_validate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64)
+        user = Account._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        request.session['uid'] = uid
+        messages.success(request, "Please reset your password!")
+        return redirect("reset_password")
+    else:
+        messages.error(request, "This link has been expired!")
+        return redirect('login')
+
+def reset_password(request):
     pass
