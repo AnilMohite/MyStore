@@ -120,7 +120,7 @@ def forgot_password(request):
                 send_email = EmailMessage(email_subject, email_message, to=[to_email])
                 send_email.send()
                 messages.success(request, "Password reset link has been sent to your email")
-                return redirect('login  ')
+                return redirect('login')
             except Exception as e:
                 Warning(f"Error while sending email: {str(e)}" )
                 messages.error(request, "Error while sending reset link on mail.")
