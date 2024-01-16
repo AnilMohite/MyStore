@@ -146,4 +146,5 @@ def reset_password_validate(request, uidb64, token):
         return redirect('login')
 
 def reset_password(request):
-    pass
+    print('hi')
+    return render(request, "accounts/reset_password.html")
