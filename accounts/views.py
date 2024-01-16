@@ -132,7 +132,7 @@ def forgot_password(request):
 
 def reset_password_validate(request, uidb64, token):
     try:
-        uid = urlsafe_base64_decode(uidb64)
+        uid = urlsafe_base64_decode(uidb64).decode()
         user = Account._default_manager.get(pk=uid)
     except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
         user = None
@@ -146,5 +146,17 @@ def reset_password_validate(request, uidb64, token):
         return redirect('login')
 
 def reset_password(request):
-    print('hi')
+    if request.method == "POST":
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        if password == confirm_password:
+            uid = request.session.get('uid')
+            user = Account.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(request, "Password reset successfully!")
+            return redirect('login')
+        else:
+            messages.error(request, "Password & Confirm Password does not match")
+            return redirect('reset_password')
     return render(request, "accounts/reset_password.html")
