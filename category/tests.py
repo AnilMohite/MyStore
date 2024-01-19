@@ -19,3 +19,13 @@ class CategoryTestCase(TestCase):
     def test_category_str_method(self):
         category = Category.objects.get(id=1)
         self.assertEqual(str(category), 'test cat')
+
+    def test_category_url_function(self):
+        for i in range(1,3):
+            category = Category.objects.get(id=i)
+            cat_url = category.get_url()
+            print('cat_url:',cat_url)
+            if i==1:
+                self.assertEqual(cat_url,'/store/category/test_cat/')
+            elif i==2:
+                self.assertEqual(cat_url, '/store/category/test_cat_2/')
