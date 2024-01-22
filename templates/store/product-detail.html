@@ -34,32 +34,32 @@
 
 
 								<hr>
+								{% if colors %}
 								<div class="row">
 									<div class="item-option-select">
 										<h6>Choose Color</h6>
 										<select name="color" class="form-control">
 											<option value="">Select Color</option>
-											<option value="red">Red</option>
-											<option value="gray">Gray</option>
-											<option value="yellow">Yellow</option>
-											<option value="black">Black</option>
-											<option value="white">White</option>
+											{% for color in colors %}
+											<option value="{{color.variation_value}}">{{color.variation_value}}</option>
+											{% endfor %}
 										</select>
 									</div>
 								</div> <!-- row.// -->
+								{% endif %}
+								{% if sizes %}
 								<div class="row">
 									<div class="item-option-select">
 										<h6>Select Size</h6>
 										<select name="size" class="form-control">
 											<option value="">Select Size</option>
-											<option value="s">S</option>
-											<option value="m">M</option>
-											<option value="l">L</option>
-											<option value="xl">XL</option>
-											<option value="xxl">XXL</option>
+											{% for size in sizes %}
+											<option value="{{size.variation_value}}">{{size.variation_value}}</option>
+											{% endfor %}
 										</select>
 									</div>
 								</div> <!-- row.// -->
+								{% endif %}
 								<hr>
 								{% if product.stock <= 0 %}
 								<h5 class="text-danger"> Out of Stock </h5>

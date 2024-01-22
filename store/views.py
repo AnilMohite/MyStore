@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product
+from .models import Product, Variation
 from category.models import Category
 from carts.models import CartItem
 from carts.views import _cart_id
@@ -28,8 +28,15 @@ def product_detail(request,category_slug=None,product_slug=None):
         in_cart = CartItem.objects.filter(cart__cart_id = _cart_id(request), product = single_product).exists()
     except Exception as e:
         raise e
+    
+    variations = Variation.objects.filter(product=single_product)
+    color_variations = [i for i in variations if i.variation_category=="color"]
+    size_variations = [i for i in variations if i.variation_category=="size"]
+   
     context = {
         'product' : single_product,
+        'colors' : color_variations,
+        'sizes' : size_variations,
         'in_cart' : in_cart
     }
     return render(request, 'store/product-detail.html', context)
