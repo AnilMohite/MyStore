@@ -34,26 +34,26 @@
 
 
 								<hr>
-								{% if colors %}
+								{% if product.variation_set.colors %}
 								<div class="row">
 									<div class="item-option-select">
 										<h6>Choose Color</h6>
 										<select name="color" class="form-control">
 											<option value="">Select Color</option>
-											{% for color in colors %}
+											{% for color in product.variation_set.colors %}
 											<option value="{{color.variation_value}}">{{color.variation_value}}</option>
 											{% endfor %}
 										</select>
 									</div>
 								</div> <!-- row.// -->
 								{% endif %}
-								{% if sizes %}
+								{% if product.variation_set.sizes %}
 								<div class="row">
 									<div class="item-option-select">
 										<h6>Select Size</h6>
 										<select name="size" class="form-control">
 											<option value="">Select Size</option>
-											{% for size in sizes %}
+											{% for size in product.variation_set.sizes %}
 											<option value="{{size.variation_value}}">{{size.variation_value}}</option>
 											{% endfor %}
 										</select>
