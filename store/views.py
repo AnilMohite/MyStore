@@ -28,7 +28,7 @@ def product_detail(request,category_slug=None,product_slug=None):
         in_cart = CartItem.objects.filter(cart__cart_id = _cart_id(request), product = single_product).exists()
     except Exception as e:
         raise e
-       
+    
     context = {
         'product' : single_product,
         'in_cart' : in_cart
